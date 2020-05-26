@@ -1,0 +1,65 @@
+* {
+    font-family: 'Mukta', sans-serif;
+    text-align: center;
+}
+
+body {
+    border: solid black 2px;
+    padding: 2px;
+}
+
+form {
+    display: inline space-between;
+}
+
+button {
+    background-color: rgb(81, 106, 247);
+    color: white;
+    border-radius: 8px;
+    border: none;
+}
+
+#searchForm {
+    border: solid 2px black;
+    width: 200px;
+    height: 110px;
+}
+
+#container {
+    border: solid black 2px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+#results {
+    border: solid black 2px;
+    height: 110px;
+    width: 200px;
+    margin-left: 30px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#searchHistory {
+    border: solid black 2px;
+    height: 110px;
+    width: 200px;
+    margin-left: 30px;
+    margin-right: 30px;
+    padding-left: 5px;
+    padding-right: 5px;
+    overflow: hidden;
+}
+
+#fiveDayForcast {
+    height: 250px;
+    margin: 5px;
+    display: inline-flex;
+}
+
+.forcastCard {
+    border: solid black 2px;
+    margin: 10px;
+    padding: 5px;
+}
