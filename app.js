@@ -17,9 +17,6 @@ $(document).ready(function() {
 
     if (localStorage.getItem('history') != null) {
         historyObj = JSON.parse(localStorage.getItem('history'));
-
-        // historyObj.cityNames.
-        // searchHistory.append(historyObj.cityNames)
         showHistory()
     } else {
         localStorage.setItem('history',JSON.stringify(historyObj))
@@ -44,29 +41,13 @@ $(document).ready(function() {
         cityNameSpace.innerHTML = ''
         weekForcastSpace.innerHTML = ''
         currWeatherDesSpace.innerHTML = ''
-        searchHistory.innerText = 'Search History: '
-
+        searchHistory.innerText = ''
 
         let city = cityName.value.toLowerCase().trim()
         cityNameSpace.append("City: ", city)
-
         historyObj.cityNames.push(city);
-
         localStorage.setItem('history',JSON.stringify(historyObj));
-
         showHistory()
-        //this works
-    //     let showHistory = historyObj.cityNames.toString()
-    //     let cityHistory = showHistory.split(',')
-
-        
-
-    //    cityHistory.forEach(function(item){
-    //        let newCityDiv = document.createElement('div')
-    //        newCityDiv.append(item)
-    //        searchHistory.append(newCityDiv)            
-    //    })
-
 
         const queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + apiKey
 
@@ -74,7 +55,6 @@ $(document).ready(function() {
         url: queryURL,
         method: 'GET'
         }).then(function (response) {
-            console.log(response)
             const forcastObject = []
             let currentTemp = response.list[0].main.temp
             let currentHumid = response.list[0].main.humidity
@@ -99,7 +79,6 @@ $(document).ready(function() {
                 url: secondQueryURL,
                 method: 'GET'
             }).then(function(response) {
-                console.log(response)
                 let currentUV = response.current.uvi
 
                 uvSpace.append("Current UV: ", currentUV)
@@ -147,8 +126,6 @@ $(document).ready(function() {
                 findData(fifthResponse)
                 findData(firstResponse)
 
-                console.log(forcastObject)
-
                 forcastObject.forEach(function(item){
                     let newDateDiv = document.createElement('div')
                     let newMainWeatherDiv = document.createElement('img')
@@ -184,8 +161,8 @@ $(document).ready(function() {
 
         cityHistory.forEach(function(item){
             let newCityDiv = document.createElement('div')
-            newCityDiv.append(item)
-            searchHistory.append(newCityDiv)            
+            newCityDiv.prepend(item)
+            searchHistory.prepend(newCityDiv)            
         })
 
         }
