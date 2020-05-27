@@ -13,8 +13,8 @@ $(document).ready(function() {
     document.getElementById("searchBtn").addEventListener("click", searchBtn);
     let input = document.getElementById('cityName')
     input.addEventListener("keyup", enterBtn)
-    let cityNames = localStorage.getItem("cityNames")
-   
+    let localCityStore = JSON.parse(localStorage.getItem('cityNames'))
+    // let cityArray = {}
     
     function enterBtn(e){
         if (e.keyCode === 13) {
@@ -41,9 +41,26 @@ $(document).ready(function() {
         cityNameSpace.append("City: ", city)
 
         //sending to local storage
-        localStorage.setItem("cityNames", city)
-        console.log(cityNames)
-        // searchHistory.append(cityNames)
+
+        // let cityObj = {
+        //     cityNames: JSON.parse(localStorage.getItem('cityNames')), city
+        // }
+
+        // let localCityStore = JSON.parse(localStorage.getItem('cityNames'))
+
+        // let cityStorage = localStorage.setItem('cityNames', JSON.stringify(cityObj))
+        // console.log(cityStorage)
+        // console.log(localStorage)
+        // console.log(localCityStore)
+        //option 1 create new name titles and add to the object
+        //option 2 figure out to store an array 
+            //2.1 get the existing array
+            //2.2 push new values to the existing array
+            //2.3 display the midified array
+
+
+        
+        
 
         const queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + apiKey
 
@@ -78,9 +95,20 @@ $(document).ready(function() {
             }).then(function(response) {
                 console.log(response)
                 let currentUV = response.current.uvi
+
                 uvSpace.append("Current UV: ", currentUV)
-                if (currentUV > 10) {
-                    uvSpace.setAttribute("class", "")
+                uvSpace.setAttribute("class", "")
+
+                if (currentUV >= 6) {
+                    uvSpace.setAttribute("class", "highUV")
+                } 
+
+                if (currentUV <= 5.99 && currentUV >=3) {
+                    uvSpace.setAttribute("class", "midUV")
+                }
+
+                if (currentUV <=2.99) {
+                    uvSpace.setAttribute("class", "lowUV")
                 }
 
                 let date;

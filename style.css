@@ -34,8 +34,8 @@ button {
 
 #results {
     border: solid black 2px;
-    height: 270px;
-    width: 210px;
+    height: 280px;
+    width: 230px;
     margin-left: 30px;
     padding-left: 5px;
     padding-right: 5px;
@@ -62,4 +62,26 @@ button {
     border: solid black 2px;
     margin: 10px;
     padding: 5px;
+}
+
+.highUV {
+    background-color: red;
+    margin-right: 20%;
+    margin-left: 20%;
+    border-radius: 8px;
+}
+
+.midUV {
+    background-color: yellow;
+    margin-right: 20%;
+    margin-left: 20%;
+    border-radius: 8px;
+}
+
+.lowUV {
+    background-color: green;
+    margin-right: 20%;
+    margin-left: 20%;
+    border-radius: 8px;
+
 }
