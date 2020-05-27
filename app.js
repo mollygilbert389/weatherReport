@@ -9,12 +9,21 @@ $(document).ready(function() {
     let cityNameSpace = document.querySelector("#cityNameSpace")
     let weekForcastSpace = document.querySelector("#fiveDayForcast")
     let currWeatherDesSpace = document.querySelector("#weatherDescription")
-    let searchHistory = document.getElementById('#searchHistory')
+    let searchHistory = document.querySelector('#searchHistory')
     document.getElementById("searchBtn").addEventListener("click", searchBtn);
     let input = document.getElementById('cityName')
     input.addEventListener("keyup", enterBtn)
-    let localCityStore = JSON.parse(localStorage.getItem('cityNames'))
-    // let cityArray = {}
+    let historyObj = { cityNames: [] };
+
+    if (localStorage.getItem('history') != null) {
+        historyObj = JSON.parse(localStorage.getItem('history'));
+
+        // historyObj.cityNames.
+        // searchHistory.append(historyObj.cityNames)
+        showHistory()
+    } else {
+        localStorage.setItem('history',JSON.stringify(historyObj))
+    }
     
     function enterBtn(e){
         if (e.keyCode === 13) {
@@ -35,32 +44,29 @@ $(document).ready(function() {
         cityNameSpace.innerHTML = ''
         weekForcastSpace.innerHTML = ''
         currWeatherDesSpace.innerHTML = ''
+        searchHistory.innerText = 'Search History: '
 
 
         let city = cityName.value.toLowerCase().trim()
         cityNameSpace.append("City: ", city)
 
-        //sending to local storage
+        historyObj.cityNames.push(city);
 
-        // let cityObj = {
-        //     cityNames: JSON.parse(localStorage.getItem('cityNames')), city
-        // }
+        localStorage.setItem('history',JSON.stringify(historyObj));
 
-        // let localCityStore = JSON.parse(localStorage.getItem('cityNames'))
-
-        // let cityStorage = localStorage.setItem('cityNames', JSON.stringify(cityObj))
-        // console.log(cityStorage)
-        // console.log(localStorage)
-        // console.log(localCityStore)
-        //option 1 create new name titles and add to the object
-        //option 2 figure out to store an array 
-            //2.1 get the existing array
-            //2.2 push new values to the existing array
-            //2.3 display the midified array
-
+        showHistory()
+        //this works
+    //     let showHistory = historyObj.cityNames.toString()
+    //     let cityHistory = showHistory.split(',')
 
         
-        
+
+    //    cityHistory.forEach(function(item){
+    //        let newCityDiv = document.createElement('div')
+    //        newCityDiv.append(item)
+    //        searchHistory.append(newCityDiv)            
+    //    })
+
 
         const queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + apiKey
 
@@ -172,8 +178,17 @@ $(document).ready(function() {
         input.value = ''
     }
 
+    function showHistory() {
+        let showHistory = historyObj.cityNames.toString()
+        let cityHistory = showHistory.split(',')
 
+        cityHistory.forEach(function(item){
+            let newCityDiv = document.createElement('div')
+            newCityDiv.append(item)
+            searchHistory.append(newCityDiv)            
+        })
 
+        }
 
 })
 
