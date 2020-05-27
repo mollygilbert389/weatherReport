@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    let cityName = document.querySelector('#cityName')
+    let cityName = document.querySelector('.searchBar')
     let humidSpace = document.querySelector('#currentHumid')
     let tempSpace = document.querySelector('#currentTemp')
     let uvSpace = document.querySelector("#currentUV")
@@ -8,13 +8,42 @@ $(document).ready(function() {
     let iconSpace = document.querySelector("#icon")
     let cityNameSpace = document.querySelector("#cityNameSpace")
     let weekForcastSpace = document.querySelector("#fiveDayForcast")
+    let currWeatherDesSpace = document.querySelector("#weatherDescription")
+    let searchHistory = document.getElementById('#searchHistory')
     document.getElementById("searchBtn").addEventListener("click", searchBtn);
+    let input = document.getElementById('cityName')
+    input.addEventListener("keyup", enterBtn)
+    let cityNames = localStorage.getItem("cityNames")
+   
+    
+    function enterBtn(e){
+        if (e.keyCode === 13) {
+        document.getElementById("searchBtn").click()
+        }
+    };
 
     let apiKey = "8caaadc8db15b925a1499e0138c3eb13"
 
-    function searchBtn() {
+    function searchBtn() { 
+        //clear form
+        cityName.innerHTML = ''
+        humidSpace.innerHTML = ''
+        tempSpace.innerHTML = ''
+        uvSpace.innerHTML = ''
+        windSpace.innerHTML = ''
+        iconSpace.innerHTML = ''
+        cityNameSpace.innerHTML = ''
+        weekForcastSpace.innerHTML = ''
+        currWeatherDesSpace.innerHTML = ''
+
+
         let city = cityName.value.toLowerCase().trim()
         cityNameSpace.append("City: ", city)
+
+        //sending to local storage
+        localStorage.setItem("cityNames", city)
+        console.log(cityNames)
+        // searchHistory.append(cityNames)
 
         const queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + apiKey
 
@@ -27,16 +56,21 @@ $(document).ready(function() {
             let currentTemp = response.list[0].main.temp
             let currentHumid = response.list[0].main.humidity
             let coords = response.city.coord
-            
+            let currIcon = response.list[0].weather[0].icon
+            let currWind = response.list[0].wind.speed
+            let currWeatherDes = response.list[0].weather[0].description
+
+            iconSpace.setAttribute("src", "http://openweathermap.org/img/wn/" + currIcon + "@2x.png")
             humidSpace.append("Current Humidity: ", currentHumid)
             tempSpace.append("Current Temperature: ", currentTemp)
+            windSpace.append("Current Wind Speed: ", currWind)
+            currWeatherDesSpace.append("Current Weather: ", currWeatherDes)
             
             let lon = coords.lon
             let lat = coords.lat
             let iconCode;
 
             const secondQueryURL = "https://api.openweathermap.org/data/2.5/onecall?lat="+ lat + "&lon=" + lon + "&units=imperial&exclude={part}&appid=" + apiKey
-            const iconURL = "http://openweathermap.org/img/wn/" + iconCode + "@2x.png"
 
             $.ajax({
                 url: secondQueryURL,
@@ -45,6 +79,9 @@ $(document).ready(function() {
                 console.log(response)
                 let currentUV = response.current.uvi
                 uvSpace.append("Current UV: ", currentUV)
+                if (currentUV > 10) {
+                    uvSpace.setAttribute("class", "")
+                }
 
                 let date;
                 let mainWeatherDes;
@@ -52,12 +89,12 @@ $(document).ready(function() {
                 let humidity;
                 let iconURL;
 
-                let firstResponse = response.daily[0]
+                
                 let secondResponse = response.daily[1]
                 let thirdResponse = response.daily[2]
                 let fourthResponse = response.daily[3]
                 let fifthResponse = response.daily[4]
-
+                let firstResponse = response.daily[5]
 
                 function findData(responses) {
                     date = responses.dt
@@ -70,12 +107,12 @@ $(document).ready(function() {
                     forcastObject.push({date, mainWeatherDes, temp, humidity, iconURL})
                 }
 
-                findData(firstResponse)
                 findData(secondResponse)
                 findData(thirdResponse)
                 findData(fourthResponse)
                 findData(fifthResponse)
-    
+                findData(firstResponse)
+
                 console.log(forcastObject)
 
                 forcastObject.forEach(function(item){
@@ -103,6 +140,8 @@ $(document).ready(function() {
         }).catch(function (error) {
             console.log(error)
         })
+
+        input.value = ''
     }
 
 

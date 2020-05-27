@@ -34,8 +34,8 @@ button {
 
 #results {
     border: solid black 2px;
-    height: 110px;
-    width: 200px;
+    height: 270px;
+    width: 210px;
     margin-left: 30px;
     padding-left: 5px;
     padding-right: 5px;
@@ -44,7 +44,7 @@ button {
 #searchHistory {
     border: solid black 2px;
     height: 110px;
-    width: 200px;
+    width: 210px;
     margin-left: 30px;
     margin-right: 30px;
     padding-left: 5px;
