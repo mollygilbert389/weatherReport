@@ -2,14 +2,14 @@
 
 ## Table of Contents
   - [Description](#description)
-  - [Deployed Application](#deployedapplication)
+  - [Deployment](#deployment)
   - [Usage](#usage)
   - [Questions](#questions)
 
 ## Description
 This is a weather reporting application made with JavaScript and OpenWeatherAPI. This application also utilizes localStorage to store the users search history. 
 
-## Deployed Application
+## Deployment
 [Deployed Applicaton](https://mollygilbert389.github.io/weatherReport/)
 
 ![weather](https://user-images.githubusercontent.com/29104770/97787132-45742180-1b7e-11eb-9aa7-112fdd262d61.gif)
