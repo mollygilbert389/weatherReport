@@ -2,7 +2,7 @@
 
 ## Table of Contents
   - [Description](#description)
-  - [Deployed Application](#Deployed Application)
+  - [Deployed Application](#deployed application)
   - [Usage](#usage)
   - [Questions](#questions)
 
